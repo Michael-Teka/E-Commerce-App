@@ -79,6 +79,8 @@ flutter:
     - family: Chango
       fonts:
         - asset: assets/fonts/Chango-Regular.ttf
+    - family: Sigmar
+      fonts:
         - asset: assets/fonts/Sigmar-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

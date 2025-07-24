@@ -7,22 +7,89 @@ class CategoryProductPage extends StatelessWidget {
   final String title;
   const CategoryProductPage({super.key, required this.title});
 
+  List<Product> getProductsByCategory(String category) {
+    switch (category) {
+      case 'Electronics':
+        return [
+          Product(
+            name: 'Smart TV',
+            image: 'assets/images/tv.jpg',
+            price: 499.99,
+            description: 'A high-definition Smart TV with amazing clarity.',
+          ),
+          Product(
+            name: 'Refrigrator',
+            image: 'assets/images/frinje.jpg',
+            price: 89.99,
+            description: 'A high-quality product perfect for everyday use refrigrator.',
+          ),
+        ];
+      case 'Clothes':
+        return [
+          Product(
+            name: 'T-Shirt',
+            image: 'assets/images/cloth.jpg',
+            price: 19.99,
+            description: 'Soft cotton t-shirt, comfortable for daily wear.',
+          ),
+          Product(
+            name: 'T-Shirt',
+            image: 'assets/images/shirt.jpg',
+            price: 39.99,
+            description: 'Stylish and durable denim shirt.',
+          ),
+        ];
+      case 'Shoes':
+        return [
+          Product(
+            name: 'Running Shoes',
+            image: 'assets/images/shoe1.jpg',
+            price: 59.99,
+            description: 'Lightweight running shoes for active lifestyles.',
+          ),
+          Product(
+            name: 'Sneakers',
+            image: 'assets/images/shoe2.jpg',
+            price: 69.99,
+            description: 'Trendy sneakers for everyday wear.',
+          ),
+        ];
+      case 'Furniture':
+        return [
+          Product(
+            name: 'Office Chair',
+            image: 'assets/images/furn1.jpg',
+            price: 129.99,
+            description: 'Ergonomic chair with lumbar support.',
+          ),
+          Product(
+            name: 'Wooden Table',
+            image: 'assets/images/furn2.jpg',
+            price: 199.99,
+            description: 'Elegant wooden table perfect for dining.',
+          ),
+        ];
+      default:
+        return [
+          Product(
+            name: '$category Item 1',
+            image: 'assets/images/car.jpg',
+            price: 49.99,
+            description: 'A high-quality $category product.',
+          ),
+          Product(
+            name: '$category Item 2',
+            image: 'assets/images/default2.jpg',
+            price: 59.99,
+            description: 'Another great $category product.',
+          ),
+        ];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final List<Product> products = [
-      Product(
-        name: '$title Item 1',
-        image: 'assets/images/cloth.jpg',
-        price: 49.99,
-        description: 'A high-quality $title product perfect for everyday use.',
-      ),
-      Product(
-        name: '$title Item 2',
-        image: 'assets/images/tv.jpg',
-        price: 299.99,
-        description: 'Premium $title item with great features.',
-      ),
-    ];
+    final List<Product> products = getProductsByCategory(title);
 
     return Scaffold(
       appBar: AppBar(title: Text(title), backgroundColor: Colors.deepPurple),

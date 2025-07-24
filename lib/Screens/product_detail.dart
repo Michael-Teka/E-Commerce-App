@@ -41,8 +41,12 @@ class ProductDetailPage extends StatelessWidget {
                     SnackBar(content: Text('${product.name} added to cart')),
                   );
                 },
-                icon: const Icon(Icons.add_shopping_cart),
-                label: const Text("Add to Cart"),
+                icon: const Icon(Icons.add_shopping_cart,
+                color: Colors.white,),
+                label: const Text(
+                  "Add to Cart",
+                  style: TextStyle(color: Colors.white),
+                  ),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
               ),
             ),

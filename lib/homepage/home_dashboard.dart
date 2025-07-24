@@ -63,8 +63,8 @@ class HomeTab extends StatelessWidget {
   final List<Map<String, String>> categories = const [
     {"image": "assets/images/cloth.jpg", "title": "Clothes"},
     {"image": "assets/images/tv.jpg", "title": "Electronics"},
-    {"image": "assets/images/frinje.jpg", "title": "Refrigerator"},
-    {"image": "assets/images/car.jpg", "title": "Cars"},
+    {"image": "assets/images/shoe1.jpg", "title": "Shoes"},
+    {"image": "assets/images/furn1.jpg", "title": "Furniture"},
   ];
 
   final List<Map<String, String>> recentItems = const [
