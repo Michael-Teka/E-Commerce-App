@@ -1,7 +1,5 @@
-// settings_page.dart
 import 'package:flutter/material.dart';
 
-// ✅ Settings Page
 class SettingsTab extends StatelessWidget {
   const SettingsTab({super.key});
 

@@ -1,8 +1,8 @@
-import 'package:ecommerce/cart/cart_page.dart';
-import 'package:ecommerce/settings/setting.dart';
+import 'package:ecommerce/Screens/category_productPage.dart';
+import 'package:ecommerce/Screens/product_list.dart';
 import 'package:flutter/material.dart';
-
-
+import '../cart/cart_page.dart';
+import '../settings/setting.dart';
 class HomeDashboard extends StatefulWidget {
   const HomeDashboard({super.key});
 
@@ -20,7 +20,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
   ];
 
   final List<String> _titles = [
-    "E-Commerce App",
+    "Home Page",
     "Cart",
     "Settings",
   ];
@@ -57,98 +57,182 @@ class _HomeDashboardState extends State<HomeDashboard> {
   }
 }
 
-// ✅ Home Tab Layout
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
 
+  final List<Map<String, String>> categories = const [
+    {"image": "assets/images/cloth.jpg", "title": "Clothes"},
+    {"image": "assets/images/tv.jpg", "title": "Electronics"},
+    {"image": "assets/images/frinje.jpg", "title": "Refrigerator"},
+    {"image": "assets/images/car.jpg", "title": "Cars"},
+  ];
+
+  final List<Map<String, String>> recentItems = const [
+    {"image": "assets/images/cloth.jpg", "title": "T-Shirt"},
+    {"image": "assets/images/tv.jpg", "title": "Smart TV"},
+    {"image": "assets/images/frinje.jpg", "title": "Mini Fridge"},
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // 🔍 Search Bar
-          TextField(
-            decoration: InputDecoration(
-              hintText: "Search products...",
-              prefixIcon: const Icon(Icons.search),
-              filled: true,
-              fillColor: Colors.white,
-              contentPadding: const EdgeInsets.all(15),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
-              ),
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        // 🔍 Search Bar
+        TextField(
+          decoration: InputDecoration(
+            hintText: "Search products...",
+            prefixIcon: const Icon(Icons.search),
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding: const EdgeInsets.all(15),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
             ),
           ),
-          const SizedBox(height: 25),
+        ),
+        const SizedBox(height: 25),
 
-          const Text(
-            "Categories",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 15),
+        const Text(
+          "Featured Products",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 15),
 
-          // 🏷️ Categories Grid
-          Expanded(
-            child: GridView.count(
-              crossAxisCount: 2,
-              mainAxisSpacing: 16,
-              crossAxisSpacing: 16,
-              children: const [
-                CategoryCard(image: "assets/images/cloth.jpg", title: "Clothes"),
-                CategoryCard(image: "assets/images/tv.jpg", title: "Electronics"),
-                CategoryCard(image: "assets/images/frinje.jpg", title: "Refrigerator"),
-                CategoryCard(image: "assets/images/car.jpg", title: "Cars"),
-              ],
-            ),
+        SizedBox(
+          height: 180,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: recentItems.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 12),
+            itemBuilder: (context, index) {
+              final item = recentItems[index];
+              return Container(
+                width: 140,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: const [
+                    BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 3)),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                        child: Image.asset(
+                          item['image']!,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        item['title']!,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 25),
+
+        const Text(
+          "Categories",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 15),
+
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: categories.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
+            childAspectRatio: 3 / 2.6,
+          ),
+          itemBuilder: (context, index) {
+            final category = categories[index];
+            return CategoryCard(
+              image: category['image']!,
+              title: category['title']!,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => ProductListPage(category: category['title']!),
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ],
     );
   }
 }
 
-
-
-// ✅ Category Card Widget
 class CategoryCard extends StatelessWidget {
   final String image;
   final String title;
+  final VoidCallback onTap;
 
-  const CategoryCard({super.key, required this.image, required this.title});
+  const CategoryCard({
+    super.key,
+    required this.image,
+    required this.title,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 3)),
-        ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CategoryProductPage(title: title),
       ),
-      child: Column(
-        children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-              child: Image.asset(
-                image,
-                fit: BoxFit.cover,
-                width: double.infinity,
+    );
+  },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: const [
+            BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 3)),
+          ],
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                child: Image.asset(
+                  image,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                title,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

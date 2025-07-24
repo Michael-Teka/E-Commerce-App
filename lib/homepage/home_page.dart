@@ -1,4 +1,4 @@
-import 'package:ecommerce/homepage/home_dashboard.dart';
+import 'package:ecommerce/Screens/signin.dart';
 import 'package:flutter/material.dart';
 
 class Myhomepage extends StatelessWidget {
@@ -12,10 +12,11 @@ class Myhomepage extends StatelessWidget {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Welcome to E commerce App',
+            const Text('Welcome to E commerce App!',
                 style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Sigmar',
+                  fontSize: 35,
+                  fontWeight: FontWeight.w700,
                   color: Colors.black,
                 )),
                 const SizedBox(height: 100,),
@@ -23,7 +24,7 @@ class Myhomepage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomeDashboard()),
+                  MaterialPageRoute(builder: (context) => const SignInPage()),
                 );
               },
               child: const Text(
